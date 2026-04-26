@@ -1,10 +1,21 @@
-# DËBRAIN AI Template
+# Car History — Checklist de Mantenimiento Vehicular
 
-A starting point for building web apps with AI assistance. Everything is pre-configured so you can focus on building, not setup.
+Aplicación web para gestionar el mantenimiento preventivo de vehículos mediante un checklist inteligente basado en kilometraje. Calcula automáticamente el estado de cada tarea de mantenimiento y te alerta cuando algo está vencido o próximo a vencer.
 
 ---
 
-## What's included
+## Características
+
+- **Checklist basado en kilometraje** — Ingresa tu kilometraje actual y obtén un reporte completo del estado de mantenimiento
+- **Categorías organizadas** — Motor, frenos, fluidos, filtros, neumáticos, eléctrico, transmisión y general
+- **Priorización inteligente** — Cada item tiene nivel de importancia (crítica, alta, media)
+- **Estados visuales** — Vencido (rojo), próximo a vencer (amarillo), al día (verde)
+- **Descripciones detalladas** — Cada tarea incluye guía de procedimiento y recomendaciones
+- **Intervalos personalizables** — Cada item de mantenimiento tiene su propio intervalo en kilómetros
+
+---
+
+## Stack Tecnológico
 
 | Layer      | Technology             |
 | ---------- | ---------------------- |
@@ -46,23 +57,7 @@ Make sure you have these installed on your machine:
 vp install
 ```
 
-**2. Clean the boilerplate (recommended for new projects)**
-
-Remove the demo homepage and start with a blank slate:
-
-```bash
-vp run cleanup
-```
-
-This will:
-
-- Delete example components and demo assets (favicon, images)
-- Replace `App.vue` with a minimal blank template
-- Ask for confirmation before proceeding (type `yes` to confirm)
-
-⚠️ **Skip this step if you want to keep the demo homepage as a reference.**
-
-**3. Start the development servers**
+**2. Start the development servers**
 
 ```bash
 vp run dev
@@ -85,71 +80,119 @@ The agent will generate the code, create files, update the database schema, and 
 
 ## Common tasks
 
-### Working with your AI agent
+Esto inicia el frontend (`http://localhost:5173`) y el backend (`http://localhost:3001`) simultáneamente.
 
-**Be specific with your prompts**
+**3. Usa la aplicación**
 
-Instead of: _"add a form"_  
-Say: _"add a contact form with name, email, and message fields that saves to the database and sends an email notification"_
+1. Abre `http://localhost:5173` en tu navegador
+2. Ingresa el kilometraje actual de tu vehículo
+3. Revisa el checklist generado con el estado de cada item de mantenimiento
+4. Marca las tareas completadas según avances
 
-**Use the inbox/ folder**
+---
 
-Drop any files (logos, images, fonts, PDFs) into the `inbox/` folder. Then tell your agent:  
-_"Use the logo in inbox/ for the header"_
+## Cómo funciona
 
-### Database changes
+### Flujo de uso
 
-**Add a new table**
+1. gregar una tabla nueva\*\*
 
-1. Tell your AI agent: _"add a [name] table with fields [...]"_
-2. The agent will update `apps/api/src/db/schema.ts`
-3. Generate and apply the migration:
+1. Actualiza el schema en `apps/api/src/db/schema.ts`
+1. Genera y aplica la migracióefinidos en `apps/website/src/components/checklist/maintenanceData.ts`. Para agregar nuevos items:
 
-```bash
-vp run db:generate
-vp run db:migrate
-```
-
-**View your database**
+````typescript
+{
+  id: "nuevo-item",
+  name: "Nombre del mantenimiento",
+  description: "Descripción detallada del procedimiento...",
+  intervalKm: 10000, // cada cuántos km se debe realizar
+  cer la base de datos**
 
 ```bash
 vp run db:studio
-```
+````
 
-This opens Drizzle Studio in your browser where you can inspect and edit your data.
+Esto abre Drizzle Studio en el navegador para inspeccionar y editar datos.
 
-### Deployment
+### Despliegueo\*\* — Batería, alternador, luces
 
-**Deploy with Docker**
+- **🔩 Transmisión** — Aceite de transmisión, clutch
+- **spliegue con Docker**
 
 ```bash
 docker compose up --build
 ```
 
-This builds everything and starts the app on `http://localhost:3001`. Your database and uploaded files are stored in the `storage/` folder and survive container restarts.
+Construye todo e inicia la aplicación en `http://localhost:3001`. La base de datos y archivos subidos se guardan en `storage/` y persisten entre reinicios.
 
-**Deploy to production (Coolify, Railway, etc.)**
+**Despliegue a producción (Coolify, Railway, etc.)**
 
-Use the **Docker Compose** deployment type. The project includes:
+Usa el tipo de despliegue **Docker Compose**. El proyecto incluye
+vp run db:generate
+vp run db:migrate
 
-- `Dockerfile` — Multi-stage build for production
-- `docker-compose.yml` — Container orchestration
-- `nixpacks.toml` — Coolify configuration
+````
 
+**View your database**
+
+```bash
+vp Estructura del proyecto
+
+````
+
+apps/
+website/ ← Frontend Vue.js
+src/
+components/
+checklist/
+maintenanceData.ts ← Items de mantenimiento
+ChecklistView.vue ← Vista del checklist
+ChecklistItem.vue ← Item individual
+MileageInput.vue ← Entrada de kilometraje
+api/ ← Backend Express
+packages/
+utils/ ← Utilidades compartidas
+storage/
+db/ ← Base de datos SQLite (no eliminar)
+uploads/ ← Archivos subidos por usuarios
+inbox/ ← Assets sin procesar (imágenes, fuentes, PDFs)
+
+```
+
+---
+
+## Roadmap
+
+- [ ] Guardar historial de mantenimiento en la base de datos
+- [ ] Autenticación de usuarios
+- [ ] Múltiples vehículos por usuario
+- [ ] Recordatorios por email/SMS
+- [ ] Exportar historial a PDF
+- [ ] Agregar fotos de comprobantes
+- [ ] Costos de mantenimiento
+- [ ] Gráficas de gastos y tendencias
+
+---
+
+## Contacto
+
+**José Daniel** —
 ---
 
 ## Project structure
 
 ```
+
 apps/
-  website/        ← Vue.js frontend
-  api/            ← Express backend
+website/ ← Vue.js frontend
+api/ ← Express backend
 packages/
-  utils/          ← Shared utilities
+utils/ ← Shared utilities
 storage/
-  db/             ← SQLite database (do not delete)
-  uploads/        ← User file uploads
-inbox/            ← Drop your assets here (images, fonts, PDFs...)
+db/ ← SQLite database (do not delete)
+uploads/ ← User file uploads
+inbox/ ← Drop your assets here (images, fonts, PDFs...)
+
 ```
 
 ### The `inbox/` folder
@@ -161,3 +204,4 @@ This is your workspace. Drop any files here that you want your AI agent to work 
 ## Need help?
 
 Contact **José Daniel** at [jose@hellodebrain.com](mailto:jose@hellodebrain.com)
+```
